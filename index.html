@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>@Clon41k — home</title>
+  <link rel="icon" href="img/favikon.jpg">
+  <link rel="stylesheet" href="main.css">
+ </head>
+<body>
+  <div class="site">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo"><img src="img/708490d1d75fe225f2e9f0c1694a0420.jpg" alt="logo" class="logo-img"></div>
+        <div>
+          <div style="font-weight:700;color:#8a4197">@Clon41k</div>
+          <div style="font-size:12px;color:var(--muted)">digital boy</div>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Главное меню">
+        <a href="#about">О себе</a>
+        <a href="#works">Работы</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-left">
+          <h1 class="hero-title">Привет — я Кирилл</h1>
+          <p class="hero-sub"></p>
+          <div class="hero-cta">
+            <button class="btn" id="open-works">Мои работы</button>
+            <button class="btn secondary" id="contact-me">Связаться</button>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="art" role="img" aria-label="artwork"></div>
+          <button id="audio-control" aria-pressed="false" aria-label="Включить фоновую музыку">Включить звук</button>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="grid">
+          <div class="card">
+            <h3>Обо мне</h3>
+            <p class="muted">Учусь в Университе FEI STU DT SLOVAKIA</p>
+          </div>
+          <div class="card">
+            <h3>Навыки</h3>
+            <p class="muted">HTML • CSS • JS • GO • C# • Python • SQL • дизайн</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="works" class="section">
+        <h3>Работы</h3>
+        <div class="grid">
+          <div class="card" id="project-1">Проект 1</div>
+          <div class="card" id="project-2">Проект 2</div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <h3>Контакты</h3>
+        <p class="muted">Напишите мне: <a href="mailto:pavelkirill19@gmail.com">pavelkirill19@gmail.com</a></p>
+        <div class="contact-links">
+          <a class="contact-link" href="https://instagram.com/Clon41k" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+       
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.4"/><path d="M16 11.999a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 6.5h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+          <a class="contact-link" href="https://t.me/Clon41k" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2025 @Clon41k — made with Love✨
+    </footer>
+  </div>
+
+
+  <audio id="bg-audio" src="audio/Кишлак - Музыка.mp3" loop preload="auto"></audio>
+
+  <script>
+
+    (function(){
+      const audio = document.getElementById('bg-audio');
+      const btn = document.getElementById('audio-control');
+      if(!audio || !btn) return;
+
+      function show(){ btn.style.display = 'inline-flex'; }
+      function hide(){ btn.style.display = 'none'; }
+
+ 
+      const saved = localStorage.getItem('bgAudioEnabled');
+      if(saved === '1'){
+        audio.play().then(()=> hide()).catch(()=> show());
+      } else {
+        audio.play().then(()=> { localStorage.setItem('bgAudioEnabled','1'); hide(); }).catch(()=> show());
+      }
+
+      btn.addEventListener('click', async function(){
+        try{ await audio.play(); localStorage.setItem('bgAudioEnabled','1'); btn.textContent='Музыка включена'; setTimeout(hide,700); }
+        catch(e){ console.warn(e); }
+      });
+
+      document.querySelector('.logo').addEventListener('click', function(){
+        if(audio.paused){ audio.play(); } else { audio.pause(); }
+      });
+    })();
+  </script>
+
+ 
+  <div id="project-modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div class="modal-body">
+       
+        <div class="empty-block">Здесь появится проект ...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+   
+    (function(){
+      const openBtn = document.getElementById('project-1');
+      const modal = document.getElementById('project-modal');
+      if(!openBtn || !modal) return;
+
+      function openModal(){ modal.style.display = 'block'; setTimeout(()=> modal.classList.add('open'),10); modal.setAttribute('aria-hidden','false'); }
+      function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); setTimeout(()=> modal.style.display = 'none',220); }
+
+      openBtn.addEventListener('click', openModal);
+      modal.querySelectorAll('[data-close], .modal-close').forEach(el => el.addEventListener('click', closeModal));
+
+   
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+    })();
+  </script>
+</body>
+</html>
